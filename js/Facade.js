@@ -7,12 +7,12 @@ app.facade = (function () {
         return "ez egy text";
     }
 
-    function listen (event_name, callback) {
-        app.core.registerEvent(this.myname, event_name ,callback);
+    function listen (module_name, event_name, callback) {
+        app.core.registerEvent(module_name, event_name ,callback);
     }
 
-    function emit (event_name, data) {
-        app.core.emitMessage(event_name, data);
+    function emit (module_name, event_name, data) {
+        app.core.emitMessage(module_name, event_name, data);
     }
 
     return {

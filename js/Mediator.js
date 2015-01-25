@@ -14,8 +14,24 @@ var app = (function app ()  {
 
 // This is the mediator / Application Core
 app.core = (function appcore() {
-    var stateMap = {};
+    var configMap = {
 
+    //    allowed events by module
+        emitMap : {
+            mymodule : {
+                birthday: true,
+                happy: true            }
+        },
+
+        listenMap : {
+            mymodule : {
+                birthday: true,
+                happy: true
+            }
+        }
+    };
+
+    var stateMap = {};
 
 //    define modules
     stateMap.modules = {};
@@ -53,13 +69,32 @@ app.core = (function appcore() {
         stateMap.events[module_name][event_name] = callback;
     }
 
-    function emitMessage (event_name, data) {
+    function emitMessage (module_name, event_name, data) {
+        if(!configMap.emitMap[module_name]){
+            console.log("module not allowed to emit messages");
+            return false;
+        }
+        // check if module can emit this message
+        if (!configMap.emitMap[module_name][event_name])  {
+            console.log("message rejected: ", event_name, data);
+            return false;
+        }
         var amodule;
         for (amodule in stateMap.events) {
-            if (stateMap.events[amodule] ) {
+            if(!configMap.listenMap[amodule]){
+                console.log("module not allowed to receive messages");
+                return false;
+            }
+            if (stateMap.events[amodule][event_name] ) {
+                // check if module can receive the message
+                if (!configMap.listenMap[amodule][event_name]) {
+                    console.log("module not allowed to receive message", event_name, data);
+                    return false;
+                }
                 stateMap.events[amodule][event_name](data);
             }
         }
+        return true;
     }
 
 
