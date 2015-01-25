@@ -3,9 +3,6 @@
  */
 
 app.facade = (function () {
-    function gettext () {
-        return "ez egy text";
-    }
 
     function listen (module_name, event_name, callback) {
         app.core.registerEvent(module_name, event_name ,callback);
@@ -16,7 +13,6 @@ app.facade = (function () {
     }
 
     return {
-        gettext: gettext,
         listen: listen,
         emit: emit
     }

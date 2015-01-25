@@ -2,7 +2,7 @@
  * Created by bfulop on 20/01/15.
  */
 
-var app = (function app ()  {
+var app = (function app() {
     'use strict';
     //var startApp = function () {
     //    app.core.startAll();
@@ -16,17 +16,22 @@ var app = (function app ()  {
 app.core = (function appcore() {
     var configMap = {
 
-    //    allowed events by module
+        //    allowed events by module
         emitMap : {
-            mymodule : {
-                birthday: true,
-                happy: true            }
+            DisplayTodos : {
+                NewTask : true
+            },
+            TodosModel   : {
+                NewTaskAdded : true
+            }
         },
 
         listenMap : {
-            mymodule : {
-                birthday: true,
-                happy: true
+            DisplayTodos : {
+                NewTaskAdded : true
+            },
+            TodosModel   : {
+                NewTask : true
             }
         }
     };
@@ -41,16 +46,16 @@ app.core = (function appcore() {
         stateMap.modules[name].myid = name;
     }
 
-    function get (module_name) {
+    function get(module_name) {
         return stateMap.modules[module_name];
     }
 
-    function startModule (module_name) {
+    function startModule(module_name) {
         stateMap.modules[module_name].init(app.facade);
     }
 
     // start up the modules
-    function startAll () {
+    function startAll() {
         var moduleid;
         for (moduleid in stateMap.modules) {
             startModule(moduleid);
@@ -62,30 +67,30 @@ app.core = (function appcore() {
     // Events handling
     stateMap.events = {};
 
-    function registerEvent (module_name, event_name, callback) {
+    function registerEvent(module_name, event_name, callback) {
         if (!stateMap.events[module_name]) {
             stateMap.events[module_name] = {};
         }
         stateMap.events[module_name][event_name] = callback;
     }
 
-    function emitMessage (module_name, event_name, data) {
-        if(!configMap.emitMap[module_name]){
+    function emitMessage(module_name, event_name, data) {
+        if (!configMap.emitMap[module_name]) {
             console.log("module not allowed to emit messages");
             return false;
         }
         // check if module can emit this message
-        if (!configMap.emitMap[module_name][event_name])  {
+        if (!configMap.emitMap[module_name][event_name]) {
             console.log("message rejected: ", event_name, data);
             return false;
         }
         var amodule;
         for (amodule in stateMap.events) {
-            if(!configMap.listenMap[amodule]){
+            if (!configMap.listenMap[amodule]) {
                 console.log("module not allowed to receive messages");
                 return false;
             }
-            if (stateMap.events[amodule][event_name] ) {
+            if (stateMap.events[amodule][event_name]) {
                 // check if module can receive the message
                 if (!configMap.listenMap[amodule][event_name]) {
                     console.log("module not allowed to receive message", event_name, data);
@@ -106,7 +111,7 @@ app.core = (function appcore() {
         startModule: startModule,
         get: get,
 
-    //    return event handling methods
+        //    return event handling methods
         registerEvent: registerEvent,
         emitMessage: emitMessage
     }
@@ -115,15 +120,7 @@ app.core = (function appcore() {
 }());
 
 
-
-
-
-
-
 // Manage pub/sub by modules
-
-
-
 
 
 // Start and stop modules
