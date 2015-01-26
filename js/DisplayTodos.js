@@ -2,7 +2,7 @@
  * Created by bfulop on 20/01/15.
  */
 
-app.core.define('DisplayTodos', function (facade) {
+app.core.define('DisplayTodos', function definition () {
     var stateMap = {};
 
 
@@ -11,11 +11,10 @@ app.core.define('DisplayTodos', function (facade) {
     }
 
     function init(facade) {
-        stateMap.myid   = this.myid;
         stateMap.facade = facade;
         console.log( "displaytodos initialised" );
-        facade.listen( stateMap.myid, 'NewTaskAdded', alertme );
-        facade.emit( stateMap.myid, 'NewTask', {
+        facade.listen( 'NewTaskAdded', alertme );
+        facade.emit( 'NewTask', {
             desc: "my new task"
         });
     }

@@ -43,7 +43,6 @@ app.core = (function appcore() {
 
     function define(name, impl) {
         stateMap.modules[name] = impl.apply(impl);
-        stateMap.modules[name].myid = name;
     }
 
     function get(module_name) {
@@ -51,7 +50,9 @@ app.core = (function appcore() {
     }
 
     function startModule(module_name) {
-        stateMap.modules[module_name].init(app.facade);
+        var facade = Object.create(app.facade);
+        facade.init(module_name);
+        stateMap.modules[module_name].init(facade);
     }
 
     // start up the modules

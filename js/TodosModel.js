@@ -3,7 +3,7 @@
  */
 
 
-app.core.define( 'TodosModel', function ( facade ) {
+app.core.define( 'TodosModel', function definition () {
     var stateMap = {
         cid_serial   : 1,
         todo_cid_map : {}
@@ -27,6 +27,7 @@ app.core.define( 'TodosModel', function ( facade ) {
     }
 
     function getTask ( task_id ) {
+        stateMap.facade.emit( 'TaskFound', stateMap.todo_cid_map[ task.cid ] );
 
     }
 
@@ -43,17 +44,16 @@ app.core.define( 'TodosModel', function ( facade ) {
 
         stateMap.todo_cid_map[ task.cid ] = task;
 
-        stateMap.facade.emit( stateMap.myid, 'NewTaskAdded', stateMap.todo_cid_map[ task.cid ] );
+        stateMap.facade.emit( 'NewTaskAdded', stateMap.todo_cid_map[ task.cid ] );
 
     }
 
     // Todos API end
 
     function init ( facade ) {
-        stateMap.myid   = this.myid;
         stateMap.facade = facade;
         console.log( "todosmodel inititialised" );
-        facade.listen( stateMap.myid, 'NewTask', setTask );
+        facade.listen( 'NewTask', setTask );
     }
 
     return {

@@ -2,22 +2,21 @@
  * Created by bfulop on 20/01/15.
  */
 
-app.facade = (function () {
+app.facade =  {
 
-    function listen (module_name, event_name, callback) {
-        app.core.registerEvent(module_name, event_name ,callback);
+    init : function (module_name) {
+        this.module_name = module_name;
+    },
+
+    listen : function (event_name, callback) {
+        app.core.registerEvent(this.module_name, event_name ,callback);
+    },
+
+    emit : function (event_name, data) {
+        app.core.emitMessage(this.module_name, event_name, data);
     }
 
-    function emit (module_name, event_name, data) {
-        app.core.emitMessage(module_name, event_name, data);
-    }
-
-    return {
-        listen: listen,
-        emit: emit
-    }
-
-}());
+};
 
 // DOM interfaces
 
