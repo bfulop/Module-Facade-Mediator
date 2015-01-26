@@ -5,15 +5,28 @@
 app.facade =  {
 
     init : function (module_name) {
-        this.module_name = module_name;
+        this.moduleName = module_name;
+        this.rootElem = document.getElementById(module_name.toLowerCase());
+    },
+//    DOM methods
+
+    find : function ( query ) {
+        return this.rootElem.querySelector(query);
     },
 
+    addEvent : function ( targetelem, eventname, callback) {
+        targetelem.addEventListener(eventname, callback, false);
+    },
+
+
+//    event handling
+
     listen : function (event_name, callback) {
-        app.core.registerEvent(this.module_name, event_name ,callback);
+        app.core.registerEvent(this.moduleName, event_name ,callback);
     },
 
     emit : function (event_name, data) {
-        app.core.emitMessage(this.module_name, event_name, data);
+        app.core.emitMessage(this.moduleName, event_name, data);
     }
 
 };

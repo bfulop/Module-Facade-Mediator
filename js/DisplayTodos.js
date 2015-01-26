@@ -12,11 +12,7 @@ app.core.define('DisplayTodos', function definition () {
 
     function init(facade) {
         stateMap.facade = facade;
-        console.log( "displaytodos initialised" );
         facade.listen( 'NewTaskAdded', alertme );
-        facade.emit( 'NewTask', {
-            desc: "my new task"
-        });
     }
 
     return {

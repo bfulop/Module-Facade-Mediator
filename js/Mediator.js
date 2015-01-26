@@ -23,6 +23,9 @@ app.core = (function appcore() {
             },
             TodosModel   : {
                 NewTaskAdded : true
+            },
+            AddTodo      : {
+                NewTask : true
             }
         },
 

@@ -7,10 +7,19 @@
     <script src="js/Facade.js"></script>
     <script src="js/TodosModel.js"></script>
     <script src="js/DisplayTodos.js"></script>
+    <script src="js/AddTodo.js"></script>
 
 </head>
 <body>
 <h1>This is an example of the Module Facade Mediator Pattern</h1>
+<div id="todos">
+    <div id="addtodo">
+        <form >
+            <input type="text" class="addtodo-input"/>
+            <input type="submit" value="add" class="addtodo-submit"/>
+        </form>
+    </div>
+</div>
 
 <script type="application/javascript">
     app.core.startall();
