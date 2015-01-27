@@ -17,6 +17,21 @@ app.facade =  {
     addEvent : function ( targetelem, eventname, callback) {
         targetelem.addEventListener(eventname, callback, false);
     },
+    
+    appendSingleElem : function ( targetelem, sourcelem_map ) {
+        var newelem = document.createElement( sourcelem_map.tag_name );
+        newelem = text (newelem, sourcelem_map.txt );
+
+        function text ( node, txt ) {
+            node.appendChild( document.createTextNode( txt ) );
+            return node;
+        }
+
+        targetelem.appendChild(newelem);
+
+    },
+
+    
 
 
 //    event handling

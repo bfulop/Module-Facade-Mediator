@@ -8,15 +8,13 @@ app.core.define('AddTodo', function definition () {
     };
 
     function addtodo ( event ) {
+        event.preventDefault();
+        event.stopPropagation();
         var todo_text = stateMap.domelemMap.inputfield.value;
         stateMap.facade.emit( 'NewTask', {
             desc : todo_text
         } );
-        event.preventDefault();
-        event.stopPropagation();
-
     }
-
 
     function alertme(data) {
         console.log("data received ", data);

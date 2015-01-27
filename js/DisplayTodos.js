@@ -3,8 +3,16 @@
  */
 
 app.core.define('DisplayTodos', function definition () {
-    var stateMap = {};
+    var stateMap = {
+        domelemMap : {}
+    };
 
+    function addnewtodo ( todo_map ) {
+        stateMap.facade.appendSingleElem( stateMap.domelemMap.todolist, {
+            tag_name : 'li',
+            txt      : todo_map.desc
+        } );
+    }
 
     function alertme(data) {
         console.log("data received ", data);
@@ -12,7 +20,9 @@ app.core.define('DisplayTodos', function definition () {
 
     function init(facade) {
         stateMap.facade = facade;
-        facade.listen( 'NewTaskAdded', alertme );
+
+        stateMap.domelemMap.todolist = facade.find('.displaytodos-todolist');
+        facade.listen( 'NewTaskAdded', addnewtodo );
     }
 
     return {
